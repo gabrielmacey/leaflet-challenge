@@ -1,4 +1,3 @@
-
 function createMap(earthquakes) {
 
   // Define streetmap and darkmap layers
@@ -19,7 +18,7 @@ function createMap(earthquakes) {
   });
 
   // Define a baseMaps object to hold our base layers
-  var baseMaps = {
+  var baseMap = {
     "Street Map": streetmap,
     "Dark Map": darkmap
   };
@@ -41,7 +40,7 @@ function createMap(earthquakes) {
   // Create a layer control
   // Pass in our baseMaps and overlayMaps
   // Add the layer control to the map
-  L.control.layers(baseMaps, overlayMaps, {
+  L.control.layers(baseMap, overlayMaps, {
     collapsed: false
   }).addTo(myMap);
 }
