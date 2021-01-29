@@ -58,4 +58,14 @@ d3.json(queryUrl, function(data) {
     }
     return magnitude * 5;
   }
+    // GeoJSON layer
+    L.geoJson(data, {
+      pointToLayer: function(feature, latlng) {
+        return L.circleMarker(latlng);
+      },
+      style: styleInfo,
+      onEachFeature: function(feature, layer) {
+        layer.bindPopup("Magnitude: " + feature.properties.mag + "<br>Location: " + feature.properties.place);
+      }
+    }).addTo(myMap);
 };
