@@ -76,4 +76,13 @@ d3.json(queryUrl, function(data) {
     var div = L.DomUtil.create("div", "info legend");
     var depths = [">10", "10-30", "30-50", "50-70", "70-90", "90<"];
     var colors = ["#b0e0e6", "#87cefa", "00bfff", "#1e90ff", "#0000ff", "#000080"];
+    //Adding colors to the legend
+    for (var i = 0; i < grades.length; i++) {
+      div.innerHTML +=
+        "<i style='background: " + colors[i] + "'></i> " +
+        grades[i] + (grades[i + 1] ? "&ndash;" + grades[i + 1] + "<br>" : "+");
+      }
+    return div;
+    };
+
 };
