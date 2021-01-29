@@ -62,7 +62,7 @@ d3.json(queryUrl, function(data) {
       pointToLayer: function(feature, latlng) {
         return L.circleMarker(latlng);
       },
-      style: styleInfo,
+      style: styleMap,
       onEachFeature: function(feature, layer) {
         layer.bindPopup("Magnitude: " + feature.properties.mag + "<br>Location: " + feature.properties.place);
       }
