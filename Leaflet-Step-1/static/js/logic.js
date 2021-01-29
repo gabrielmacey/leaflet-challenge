@@ -14,8 +14,7 @@ var myMap = L.map("map", {
     39.8283, -98.5795
   ],
   zoom: 4.5,
-
-});
+  });
 
 streetmap.addTo(myMap);
 
@@ -68,4 +67,13 @@ d3.json(queryUrl, function(data) {
         layer.bindPopup("Magnitude: " + feature.properties.mag + "<br>Location: " + feature.properties.place);
       }
     }).addTo(myMap);
+    // create a legend for the map
+    var legend = L.control({
+      position: "bottomright"
+    });
+    // add description onto the legend
+    legend.onAdd = function() {
+    var div = L.DomUtil.create("div", "info legend");
+    var depths = [">10", "10-30", "30-50", "50-70", "70-90", "90<"];
+    var colors = ["#b0e0e6", "#87cefa", "00bfff", "#1e90ff", "#0000ff", "#000080"];
 };
