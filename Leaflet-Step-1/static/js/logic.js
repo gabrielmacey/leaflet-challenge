@@ -23,4 +23,39 @@ streetmap.addTo(myMap);
 var queryUrl = "https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_week.geojson";
 // Perform a GET request to the query URL
 d3.json(queryUrl, function(data) {
-  function style()
+  function styleMap(geometry) {
+    return {
+      opacity: 1,
+      fillOpacity: 1,
+      fillColor: getColor(geometry.coordinates[2]),
+      color: "#000000",
+      radius: getRadius(features.properties.mag),
+      stroke: true,
+      weight: 0.5
+    };
+  }
+    // changing color based on magnitude of the earthquakes
+    function getColor(coodrinates) {
+    switch (true) {
+    case coordinates < 10:
+      return "#b0e0e6";
+    case coordinates >= 10 && coordinates < 30:
+      return "#87cefa";
+    case coordinates >= 30 && coordinates < 50:
+      return "00bfff";
+    case coordinates >= 50 && coordinates < 70:
+      return "#1e90ff";
+    case coordinates >= 70 && coordinates < 90:
+      return "#0000ff";
+    default:
+      return "#000080";
+    }
+  }
+    // get radius from magnitude and amplify
+    function getRadius(magnitude) {
+    if (magnitude === 0) {
+      return 1;
+    }
+    return magnitude * 5;
+  }
+};
