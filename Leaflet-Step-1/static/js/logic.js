@@ -22,11 +22,11 @@ streetmap.addTo(myMap);
 var queryUrl = "https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_week.geojson";
 // Perform a GET request to the query URL
 d3.json(queryUrl, function(data) {
-  function styleMap(geometry) {
+  function styleMap(features) {
     return {
       opacity: 1,
       fillOpacity: 1,
-      fillColor: getColor(geometry.coordinates[2]),
+      fillColor: getColor(features.geometry.coordinates[2]),
       color: "#000000",
       radius: getRadius(features.properties.mag),
       stroke: true,
