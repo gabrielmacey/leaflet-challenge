@@ -85,4 +85,5 @@ d3.json(queryUrl, function(data) {
     return div;
     };
 
-};
+  legend.addTo(myMap);
+});
