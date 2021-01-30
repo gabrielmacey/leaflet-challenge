@@ -11,9 +11,9 @@ var streetmap = L.tileLayer("https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}
 // Create our map, giving it the streetmap and earthquakes layers to display on load
 var myMap = L.map("map", {
   center: [
-    39.8283, -98.5795
+    39.8283, -102.5795
   ],
-  zoom: 4.5,
+  zoom: 3.5,
   });
 
 streetmap.addTo(myMap);
@@ -22,19 +22,20 @@ streetmap.addTo(myMap);
 var queryUrl = "https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_week.geojson";
 // Perform a GET request to the query URL
 d3.json(queryUrl, function(data) {
-  function styleMap(features) {
+  function styleMap(feature) {
+    console.log(feature)
     return {
       opacity: 1,
       fillOpacity: 1,
-      fillColor: getColor(features.geometry.coordinates[2]),
+      fillColor: getColor(feature.geometry.coordinates[2]),
       color: "#000000",
-      radius: getRadius(features.properties.mag),
+      radius: getRadius(feature.properties.mag),
       stroke: true,
       weight: 0.5
     };
   }
     // changing color based on magnitude of the earthquakes
-    function getColor(coodrinates) {
+    function getColor(coordinates) {
     switch (true) {
     case coordinates < 10:
       return "#b0e0e6";
@@ -51,11 +52,11 @@ d3.json(queryUrl, function(data) {
     }
   }
     // get radius from magnitude and amplify
-    function getRadius(magnitude) {
-    if (magnitude === 0) {
+    function getRadius(mag) {
+    if (mag === 0) {
       return 1;
     }
-    return magnitude * 5;
+    return mag * 5;
   }
     // GeoJSON layer
     L.geoJson(data, {
@@ -74,16 +75,17 @@ d3.json(queryUrl, function(data) {
     // add description onto the legend
     legend.onAdd = function() {
     var div = L.DomUtil.create("div", "info legend");
-    var depths = [">10", "10-30", "30-50", "50-70", "70-90", "90<"];
-    var colors = ["#b0e0e6", "#87cefa", "00bfff", "#1e90ff", "#0000ff", "#000080"];
+    var depths = [-10,10,30,50,70,90];
+    var colors = ["#b0e0e6", "#87cefa", "#00bfff", "#1e90ff", "#0000ff", "#000080"];
     //Adding colors to the legend
-    for (var i = 0; i < grades.length; i++) {
-      div.innerHTML +=
-        "<i style='background: " + colors[i] + "'></i> " +
-        grades[i] + (grades[i + 1] ? "&ndash;" + grades[i + 1] + "<br>" : "+");
-      }
+    for (var i = 0; i < depths.length; i++) {
+      div.innerHTML += "<i style='background: " + colors[i] + "'></i> "
+      + depths[i] + (depths[i + 1] ? "&ndash;" + depths[i + 1] + "<br>" : "+");
+      console.log(colors[i]);
+    }
     return div;
-    };
+  };
 
   legend.addTo(myMap);
+
 });
